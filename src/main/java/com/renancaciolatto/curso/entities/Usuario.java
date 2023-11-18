@@ -1,14 +1,21 @@
 package com.renancaciolatto.curso.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "Usuario")
 public class Usuario implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
@@ -20,6 +27,10 @@ public class Usuario implements Serializable{
 	private String numero;
 	private String senha;
 	
+	@JsonIgnore
+	@OneToMany(mappedBy = "cliente")
+	private List<Pedido> pedidos = new ArrayList<>();
+
 	public Usuario() {
 	}
 	
@@ -28,6 +39,26 @@ public class Usuario implements Serializable{
 		this.nome = nome;
 		this.email = email;
 		this.numero = numero;
+		this.senha = senha;
+	}
+	
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public void setNumero(String numero) {
+		this.numero = numero;
+	}
+
+	public void setSenha(String senha) {
 		this.senha = senha;
 	}
 
@@ -49,6 +80,10 @@ public class Usuario implements Serializable{
 
 	public String getSenha() {
 		return senha;
+	}
+	
+	public List<Pedido> getPedidos() {
+		return pedidos;
 	}
 
 	@Override
